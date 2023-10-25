@@ -15,6 +15,13 @@ if (window.location.pathname === '/notes') {
   noteList = document.querySelectorAll('.list-container .list-group');
 }
 
+const newNoteButton = document.querySelector('#new-note');
+
+newNoteButton.addEventListener('click', () => {
+  activeNote = {};
+  renderActiveNote();
+});
+
 // Show an element
 const show = (elem) => {
   elem.style.display = 'inline';
@@ -190,12 +197,7 @@ if (window.location.pathname === '/notes') {
 
 getAndRenderNotes();
 
-const newNoteButton = document.querySelector('#new-note');
 
-newNoteButton.addEventListener('click', () => {
-  activeNote = {};
-  renderActiveNote();
-});
 const clearFormButton = document.querySelector('#clear-form');
 
 clearFormButton.addEventListener('click', () => {
