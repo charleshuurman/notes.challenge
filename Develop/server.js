@@ -1,3 +1,5 @@
+// Setting Up the Express Server
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -15,3 +17,18 @@ app.use(express.static('public'));
 app.listen(PORT, () => {
   console.log(`Server is listening on PORT ${PORT}`);
 });
+
+// Setting Up Routes
+// HTML routes
+
+// Route to serve notes.html
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
+  });
+  
+// Route to serve index.html
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'));
+  });
+  
+  
