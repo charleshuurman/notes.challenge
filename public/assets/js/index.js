@@ -53,24 +53,21 @@ const deleteNote = (id) =>
     }
   });
 
-const renderActiveNote = () => {
-  hide(saveNoteBtn);
-  hide(clearBtn);
-
-  if (activeNote.id) {
-    show(newNoteBtn);
-    noteTitle.setAttribute('readonly', true);
-    noteText.setAttribute('readonly', true);
-    noteTitle.value = activeNote.title;
-    noteText.value = activeNote.text;
-  } else {
-    hide(newNoteBtn);
-    noteTitle.removeAttribute('readonly');
-    noteText.removeAttribute('readonly');
-    noteTitle.value = '';
-    noteText.value = '';
-  }
-};
+  const renderActiveNote = () => {
+    hide(saveNoteBtn);
+    if (activeNote.id) {
+      noteTitle.setAttribute('readonly', true);
+      noteText.setAttribute('readonly', true);
+      noteTitle.value = activeNote.title;
+      noteText.value = activeNote.text;
+      newNoteButton.classList.remove('hidden');  // Show the "New Note" button
+    } else {
+      noteTitle.value = '';
+      noteText.value = '';
+      newNoteButton.classList.add('hidden');  // Hide the "New Note" button
+    }
+  };
+  
 
 const handleNoteSave = () => {
   const newNote = {
@@ -193,5 +190,17 @@ if (window.location.pathname === '/notes') {
 
 getAndRenderNotes();
 
+const newNoteButton = document.querySelector('#new-note');
+
+newNoteButton.addEventListener('click', () => {
+  activeNote = {};
+  renderActiveNote();
+});
+const clearFormButton = document.querySelector('#clear-form');
+
+clearFormButton.addEventListener('click', () => {
+  noteTitle.value = '';
+  noteText.value = '';
+});
 
 
