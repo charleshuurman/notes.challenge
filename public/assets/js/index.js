@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+
   const renderActiveNote = () => {
     hide(saveNoteBtn);
     if (activeNote.id) {
@@ -75,14 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
       noteText.setAttribute('readonly', true);
       noteTitle.value = activeNote.title;
       noteText.value = activeNote.text;
-      newNoteButton.classList.remove('hidden');  // Show the "New Note" button
+      if (newNoteButton) {
+        newNoteButton.classList.remove('hidden');  // Show the "New Note" button
+      }
     } else {
       noteTitle.value = '';
       noteText.value = '';
-      newNoteButton.classList.add('hidden');  // Hide the "New Note" button
+      if (newNoteButton) {
+        newNoteButton.classList.add('hidden');  // Hide the "New Note" button
+      }
     }
   };
-
+  
   const handleNoteSave = () => {
     const newNote = {
       title: noteTitle.value,
