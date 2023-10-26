@@ -116,25 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderActiveNote();
     });
   };
-  app.delete('/api/notes/:id', (req, res) => {
-    const noteId = req.params.id;
-    fs.readFile(path.join(__dirname, '/db/db.json'), 'utf8', (err, data) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Internal Server Error' });
-      }
-      let notes = JSON.parse(data);
-      notes = notes.filter(note => note.id !== noteId);
-      fs.writeFile(path.join(__dirname, '/db/db.json'), JSON.stringify(notes), (err) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ error: 'Internal Server Error' });
-        }
-        res.json({ message: 'Note deleted successfully' });
-      });
-    });
-  });
-  
+
   // Sets the activeNote and displays it
   const handleNoteView = (e) => {
     e.preventDefault();
