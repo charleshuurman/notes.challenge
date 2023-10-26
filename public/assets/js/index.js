@@ -69,24 +69,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-  const renderActiveNote = () => {
-    hide(saveNoteBtn);
-    if (activeNote.id) {
-      noteTitle.setAttribute('readonly', true);
-      noteText.setAttribute('readonly', true);
-      noteTitle.value = activeNote.title;
-      noteText.value = activeNote.text;
-      if (newNoteButton) {
-        newNoteButton.classList.remove('hidden');  // Show the "New Note" button
+    const renderActiveNote = () => {
+      if (activeNote.id) {
+        noteTitle.setAttribute('readonly', true);
+        noteText.setAttribute('readonly', true);
+        noteTitle.value = activeNote.title;
+        noteText.value = activeNote.text;
+        show(newNoteBtn);
+        hide(saveNoteBtn);
+      } else {
+        noteTitle.removeAttribute('readonly');
+        noteText.removeAttribute('readonly');
+        noteTitle.value = '';
+        noteText.value = '';
+        hide(newNoteBtn);
+        show(saveNoteBtn);
       }
-    } else {
-      noteTitle.value = '';
-      noteText.value = '';
-      if (newNoteButton) {
-        newNoteButton.classList.add('hidden');  // Hide the "New Note" button
-      }
-    }
-  };
+    };
+    
   
   const handleNoteSave = () => {
     const newNote = {
@@ -116,6 +116,25 @@ document.addEventListener('DOMContentLoaded', () => {
       renderActiveNote();
     });
   };
+  app.delete('/api/notes/:id', (req, res) => {
+    const noteId = req.params.id;
+    fs.readFile(path.join(__dirname, '/db/db.json'), 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+      let notes = JSON.parse(data);
+      notes = notes.filter(note => note.id !== noteId);
+      fs.writeFile(path.join(__dirname, '/db/db.json'), JSON.stringify(notes), (err) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        res.json({ message: 'Note deleted successfully' });
+      });
+    });
+  });
+  
 
   // Sets the activeNote and displays it
   const handleNoteView = (e) => {
