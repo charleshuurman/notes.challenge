@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'Content-Type': 'application/json'
       }
     });
+  
+  const clearFormButton = document.querySelector('.clear-btn');
+
 
   const renderActiveNote = () => {
     hide(saveNoteBtn);
@@ -174,3 +177,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   getAndRenderNotes();
 });
+
+if (clearFormButton) {
+  clearFormButton.addEventListener('click', () => {
+    noteTitle.value = '';
+    noteText.value = '';
+    activeNote = {};
+    handleRenderBtns();
+  });
+}
+
