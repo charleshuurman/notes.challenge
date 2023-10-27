@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let saveNoteBtn;
   let newNoteBtn;
   let noteList;
+  let clearFormButton;
 
   if (window.location.pathname === '/notes') {
     noteForm = document.querySelector('.note-form');
@@ -13,16 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveNoteBtn = document.querySelector('.save-note');
     newNoteBtn = document.querySelector('.new-note');
     noteList = document.querySelectorAll('.list-container .list-group');
-
-    const clearFormButton = document.querySelector('.clear-btn');
-    if (clearFormButton) {
-      clearFormButton.addEventListener('click', () => {
-        noteTitle.value = '';
-        noteText.value = '';
-        activeNote = {};
-        handleRenderBtns();
-      });
-    }
+    clearFormButton = document.querySelector('.clear-btn');
   }
 
   const show = (elem) => elem.style.display = 'inline';
@@ -54,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Content-Type': 'application/json'
       }
     });
-  
+
   const renderActiveNote = () => {
     hide(saveNoteBtn);
     if (activeNote.id) {
@@ -180,6 +172,14 @@ document.addEventListener('DOMContentLoaded', () => {
     saveNoteBtn.addEventListener('click', handleNoteSave);
     noteForm.addEventListener('input', handleRenderBtns);
     newNoteBtn.addEventListener('click', handleNewNoteView);
+    if (clearFormButton) {
+      clearFormButton.addEventListener('click', () => {
+        noteTitle.value = '';
+        noteText.value = '';
+        activeNote = {};
+        handleRenderBtns();
+      });
+    }
   }
 
   getAndRenderNotes();
