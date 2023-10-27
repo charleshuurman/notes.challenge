@@ -13,6 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
     saveNoteBtn = document.querySelector('.save-note');
     newNoteBtn = document.querySelector('.new-note');
     noteList = document.querySelectorAll('.list-container .list-group');
+
+    const clearFormButton = document.querySelector('.clear-btn');
+    if (clearFormButton) {
+      clearFormButton.addEventListener('click', () => {
+        noteTitle.value = '';
+        noteText.value = '';
+        activeNote = {};
+        handleRenderBtns();
+      });
+    }
   }
 
   const show = (elem) => elem.style.display = 'inline';
@@ -45,9 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   
-  const clearFormButton = document.querySelector('.clear-btn');
-
-
   const renderActiveNote = () => {
     hide(saveNoteBtn);
     if (activeNote.id) {
@@ -177,13 +184,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   getAndRenderNotes();
 });
-
-if (clearFormButton) {
-  clearFormButton.addEventListener('click', () => {
-    noteTitle.value = '';
-    noteText.value = '';
-    activeNote = {};
-    handleRenderBtns();
-  });
-}
-
